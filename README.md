@@ -14,7 +14,13 @@ The goal ‘Alleyway Clone’ is to receive the highest score possible by destro
 HOW TO PLAY:
 
 Move Paddle Left = 'Left' Arrow Key
+
 Move Paddle Right = 'Right' Arrow Key
+
+Pause Game = 'P' Keyboard Key
+
+Exit Game = 'Escape' Key
+
 
 ------------------------
 
