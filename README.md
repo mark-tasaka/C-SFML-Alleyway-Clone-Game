@@ -28,6 +28,12 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 
 ----------------------
 
+
+Update 1.01: 2021-02-22
+
+Added stage tranisition graphics (pause game and game over), paddle graphic and a sprite sheet for the ball animation.  Updated the code to allow for an animation sequence for the ball.
+
+
 Initial commit: 2021-02-21
 
 The initial commit for the game project.
