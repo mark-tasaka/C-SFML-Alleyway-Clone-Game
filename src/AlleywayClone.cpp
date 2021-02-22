@@ -3,10 +3,13 @@
 * Beginning C++ Game Program (second edition), published by Packt>
 */
 #include "Paddle.h"
+#include "stdafx.h"
 #include "Ball.h"
 #include <sstream>
 #include <cstdlib>
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
+#include <time.h>
 
 using namespace sf;
 
@@ -25,9 +28,11 @@ int main()
 
 	RenderWindow window(vm, "Alleyway Clone", Style::Close);
 
+	sf::Clock clockTime;
 
 	int score = 0;
 	int lives = 3;
+	int level = 1;
 
 	// Create a bat
 	Paddle paddle(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 20);
@@ -54,10 +59,10 @@ int main()
 	hud.setFont(font);
 
 	// Make it nice and big
-	hud.setCharacterSize(50);
+	hud.setCharacterSize(40);
 
 	// Choose a color
-	hud.setFillColor(Color::Blue);
+	hud.setFillColor(Color::White);
 
 	hud.setPosition(20, 20);
 
@@ -131,18 +136,19 @@ int main()
 		// Update the delta time
 		Time dt = clock.restart();
 		paddle.update(dt);
-		ball.update(dt);
+		ball.update(dt, clockTime);
 		// Update the HUD text
 		std::stringstream ss;
-		ss << "Score:" << score << "    Lives:" << lives;
+		ss << "Level: " << level << "\n\nScore:" << score << "\n\nBalls:" << lives;
 		hud.setString(ss.str());
+
 
 
 		// Handle ball hitting the bottom
 		if (ball.getPosition().top > window.getSize().y)
 		{
 			// reverse the ball direction
-			ball.reboundBottom();
+			ball.ballReSpawn();
 
 			// Remove a life
 			lives--;
@@ -160,7 +166,7 @@ int main()
 		// Handle ball hitting top
 		if (ball.getPosition().top < 0)
 		{
-			ball.reboundBatOrTop();
+			ball.reboundPaddleOrTop();
 
 			// Add a point to the players score
 			score++;
@@ -169,7 +175,7 @@ int main()
 
 		// Handle ball hitting sides
 		if (ball.getPosition().left < 202 ||
-			ball.getPosition().left + 8 > window.getSize().x)
+			ball.getPosition().left + 26 > window.getSize().x)
 		{
 			ball.reboundSides();
 		}
@@ -178,7 +184,7 @@ int main()
 		if (ball.getPosition().intersects(paddle.getPosition()))
 		{
 			// Hit detected so reverse the ball and score a point
-			ball.reboundBatOrTop();
+			ball.reboundPaddleOrTop();
 		}
 		/*
 		Draw the bat, the ball and the HUD
@@ -189,8 +195,8 @@ int main()
 		window.clear();
 		window.draw(spriteBackground);
 		window.draw(hud);
-		window.draw(paddle.getShape());
-		window.draw(ball.getShape());
+		window.draw(paddle.getSprite());
+		window.draw(ball.getSprite());
 		window.display();
 	}
 

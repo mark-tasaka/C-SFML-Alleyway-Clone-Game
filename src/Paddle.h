@@ -9,7 +9,10 @@ private:
 	Vector2f m_Position;
 
 	// A RectangleShape object
-	RectangleShape m_Shape;
+	//RectangleShape m_Shape;
+	Sprite m_Sprite;
+
+	Texture m_Texture;
 
 	float m_Speed = 1000.0f;
 
@@ -22,7 +25,8 @@ public:
 
 	FloatRect getPosition();
 
-	RectangleShape getShape();
+	//RectangleShape getShape();
+	Sprite getSprite();
 
 	void moveLeft();
 

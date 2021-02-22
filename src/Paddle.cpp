@@ -1,4 +1,10 @@
 #include "Paddle.h"
+#include <SFML/Graphics.hpp>
+#include <iostream>
+
+using namespace sf;
+using namespace std;
+
 
 // This the constructor and it is called when we create an object
 Paddle::Paddle(float startX, float startY)
@@ -6,20 +12,24 @@ Paddle::Paddle(float startX, float startY)
 	m_Position.x = startX;
 	m_Position.y = startY;
 
-	m_Shape.setSize(sf::Vector2f(100, 5));
-	m_Shape.setPosition(m_Position);
+	m_Texture.loadFromFile("../assets/images/paddle.png");
+
+	if (!m_Texture.loadFromFile("../assets/images/paddle.png"))
+	{
+		std::cout << "Error loading paddle image";
+	}
+
+	m_Sprite.setTexture(m_Texture);
+
+	m_Sprite.setOrigin(50, 10);
 	
 }
 
 FloatRect Paddle::getPosition()
 {
-	return m_Shape.getGlobalBounds();
+	return m_Sprite.getGlobalBounds();
 }
 
-RectangleShape Paddle::getShape()
-{
-	return m_Shape;
-}
 
 void Paddle::moveLeft()
 {
@@ -53,5 +63,11 @@ void Paddle::update(Time dt)
 		m_Position.x += m_Speed * dt.asSeconds();
 	}
 
-	m_Shape.setPosition(m_Position);
+	m_Sprite.setPosition(m_Position);
+}
+
+
+Sprite Paddle::getSprite()
+{
+	return m_Sprite;
 }
