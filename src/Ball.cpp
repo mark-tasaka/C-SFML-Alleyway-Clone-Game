@@ -10,8 +10,8 @@ Ball::Ball(float startX, float startY)
 {
 	m_Position.x = startX;
 	m_Position.y = startY;
-	/**/
-	m_Texture.loadFromFile("../assets/imagesballSpriteSheet.png");
+
+	m_Texture.loadFromFile("../assets/images/ballSpriteSheet.png");
 
 	if (!m_Texture.loadFromFile("../assets/images/ballSpriteSheet.png"))
 	{
@@ -80,7 +80,7 @@ void Ball::update(Time dt, Clock clock)
 	m_Position.x += m_DirectionX * m_Speed * dt.asSeconds();
 
 	
-	if (clock.getElapsedTime().asSeconds() > 10.0f)
+	if (clock.getElapsedTime().asSeconds() > 0.2f)
 	{
 		if (m_SpriteRect.left == 64)
 		{

@@ -7,6 +7,8 @@
 #include "Ball.h"
 #include <sstream>
 #include <cstdlib>
+#include <iostream>
+#include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <time.h>
@@ -32,6 +34,7 @@ int main()
 
 	int score = 0;
 	int lives = 3;
+	int hiScore = 0;
 	int level = 1;
 
 	// Create a bat
@@ -59,15 +62,43 @@ int main()
 	hud.setFont(font);
 
 	// Make it nice and big
-	hud.setCharacterSize(40);
+	hud.setCharacterSize(30);
 
 	// Choose a color
 	hud.setFillColor(Color::White);
 
 	hud.setPosition(20, 20);
 
+	// Load the high score from a text file/
+	std::ifstream inputFile("../assets/topScore/highScore.txt");
+	if (inputFile.is_open())
+	{
+		inputFile >> hiScore;
+		inputFile.close();
+	}
+
+
+
 	// Here is our clock for timing everything
 	Clock clock;
+
+	//hit sound
+	SoundBuffer hitBuffer;
+	hitBuffer.loadFromFile("../assets/sound/hit.wav");
+	Sound hit;
+	hit.setBuffer(hitBuffer);
+
+	//hit paddle
+	SoundBuffer hitBufferPaddle;
+	hitBufferPaddle.loadFromFile("../assets/sound/hitPaddle.wav");
+	Sound hit2;
+	hit2.setBuffer(hitBufferPaddle);
+
+	//Miss sound
+	SoundBuffer missBuffer;
+	missBuffer.loadFromFile("../assets/sound/miss.wav");
+	Sound miss;
+	miss.setBuffer(missBuffer);
 
 	while (window.isOpen())
 	{
@@ -139,7 +170,7 @@ int main()
 		ball.update(dt, clockTime);
 		// Update the HUD text
 		std::stringstream ss;
-		ss << "Level: " << level << "\n\nScore:" << score << "\n\nBalls:" << lives;
+		ss << "Level: " << level << "\n\nScore: " << score << "\n\nBalls: " << lives << "\n\nTop Score:\n" << hiScore;
 		hud.setString(ss.str());
 
 
@@ -153,10 +184,18 @@ int main()
 			// Remove a life
 			lives--;
 
+			miss.play();
+
 			// Check for zero lives
 			if (lives < 1) {
 				// reset the score
 				score = 0;
+
+
+				std::ofstream outputFile("../assets/topScore/highScore.txt");
+				outputFile << hiScore;
+				outputFile.close();
+
 				// reset the lives
 				lives = 3;
 			}
@@ -169,7 +208,14 @@ int main()
 			ball.reboundPaddleOrTop();
 
 			// Add a point to the players score
-			score++;
+			score+= 5;
+
+			if (score > hiScore)
+			{
+				hiScore = score;
+			}
+
+			hit.play();
 
 		}
 
@@ -178,6 +224,8 @@ int main()
 			ball.getPosition().left + 26 > window.getSize().x)
 		{
 			ball.reboundSides();
+
+			hit.play();
 		}
 
 		// Has the ball hit the bat?
@@ -185,6 +233,7 @@ int main()
 		{
 			// Hit detected so reverse the ball and score a point
 			ball.reboundPaddleOrTop();
+			hit2.play();
 		}
 		/*
 		Draw the bat, the ball and the HUD
