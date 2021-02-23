@@ -29,6 +29,12 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 ----------------------
 
 
+
+Update 1.02: 2021-02-23
+
+A new folder containing .wav files has been added, containg the sounds for the game.  As well, a new spritesheet for the bricks and brick animations has been added.  A brick class (brick.h and brick.cpp) has been created to allowing for brick objects to be initialized.
+
+
 Update 1.01: 2021-02-22
 
 Added stage tranisition graphics (pause game and game over), paddle graphic and a sprite sheet for the ball animation.  Updated the code to allow for an animation sequence for the ball.
