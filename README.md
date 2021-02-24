@@ -29,6 +29,10 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 ----------------------
 
 
+Update 1.03: 2021-02-24
+
+Added a new SpawnBrick class (SpawnBrick.h and SpawnBrick.cpp) that will randomly generate the layout of bricks for the games. 
+
 
 Update 1.02: 2021-02-23
 
