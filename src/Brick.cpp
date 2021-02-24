@@ -6,18 +6,18 @@
 #include <SFML/Graphics.hpp>
 #include "stdafx.h"
 #include "Brick.h"
+#include "Constant.h"
 #include <iostream>
 
 using namespace sf;
 
-const int BRICK_WIDTH = 100;
-const int BRICK_HEIGHT = 20;
 
 
 Brick::Brick(Vector2f position, int id)
 {
 	m_BrickId = id;
-	m_Sprite = getSprite(m_BrickId);
+	setSprite(m_BrickId);
+	m_Sprite = getSprite();
 	m_Sprite.setPosition(position);
 
 	if (m_BrickId == 6)
@@ -26,10 +26,9 @@ Brick::Brick(Vector2f position, int id)
 	}
 }
 
-
-Sprite Brick::getSprite(int id)
+void Brick::setSprite(int id)
 {
-	
+
 	switch (id)
 	{
 	case 1:
@@ -72,11 +71,16 @@ Sprite Brick::getSprite(int id)
 	{
 		std::cout << "Error loading paddle image";
 	}
-	m_SpriteRect = sf::IntRect(0, m_YLocation, 16, 16);
+	m_SpriteRect = sf::IntRect(0, m_YLocation, 100, 20);
 	m_Sprite.setTexture(m_Texture);
 	m_Sprite.setTextureRect(m_SpriteRect);
 
 	m_Sprite.setOrigin(50, 10);
+
+}
+
+Sprite Brick::getSprite()
+{
 	return m_Sprite;
 }
 
@@ -166,3 +170,9 @@ void Brick::update(Clock clock)
 		}
 	}
 }
+
+/*
+bool Brick::isBrickAlive()
+{
+	return m_IsAlive;
+}*/

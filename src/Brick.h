@@ -21,19 +21,21 @@ private:
 	Texture m_Texture;
 	int m_BrickId;
 	int m_YLocation;
-	bool m_IsAlive = true;
 	bool m_PowerBall = false;
 
 
 public:
 	Brick(Vector2f position, int id);
-	Sprite getSprite(int id);
+	void setSprite(int id);
+	Sprite getSprite();
 	IntRect getSpriteRect();
 	Vector2f topRight();
 	Vector2f topLeft();
 	Vector2f bottomRight();
 	Vector2f bottomLeft();
 	void destroyBrick();
+	//bool isBrickAlive();
+	bool m_IsAlive = true;
 
 	void update(Clock clock);
 

@@ -5,6 +5,7 @@
 #include "Paddle.h"
 #include "stdafx.h"
 #include "Ball.h"
+#include "Constant.h"
 #include <sstream>
 #include <cstdlib>
 #include <iostream>
@@ -12,12 +13,11 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include <time.h>
+#include "SpawnBricks.h"
 
 using namespace sf;
 
 
-const unsigned int SCREEN_WIDTH = 1200;
-const unsigned int SCREEN_HEIGHT = 900;
 
 
 int main()
@@ -37,11 +37,33 @@ int main()
 	int hiScore = 0;
 	int level = 1;
 
+	std::vector<Brick> bricks = SpawnBricks().generateBrickVector();
+
+	srand(time(NULL));
+
+	std:vector<int> brickTypeVector;
+
+	//Brick types
+	for (int k = 0; k < bricks.size(); ++k)
+	{
+		int brickType = rand() % 6 + 1;
+		brickTypeVector.push_back(k);
+	}
+
+	int bType = 0;
+
+	for (auto& theBrickLayout : bricks)
+	{
+		theBrickLayout.setSprite(brickTypeVector[bType]);
+
+		bType++;
+	}
+
 	// Create a bat
 	Paddle paddle(SCREEN_WIDTH / 2, SCREEN_HEIGHT - 20);
 
 	// We will add a ball in the next chapter
-	Ball ball(SCREEN_WIDTH / 2, 0);
+	Ball ball(SCREEN_WIDTH / 2, 200);
 
 	// Create a Text object called HUD
 	Text hud;
@@ -168,11 +190,36 @@ int main()
 		Time dt = clock.restart();
 		paddle.update(dt);
 		ball.update(dt, clockTime);
+	
+		
 		// Update the HUD text
 		std::stringstream ss;
 		ss << "Level: " << level << "\n\nScore: " << score << "\n\nBalls: " << lives << "\n\nTop Score:\n" << hiScore;
 		hud.setString(ss.str());
 
+		//Ball hitting brick
+		for (int i = 0; i < bricks.size(); i++)
+		{
+			//int brickType = rand() % 6 + 1;
+			//bricks[i].setSprite(brickTypeVector[i]);
+			//if(ball. >= bricks[i].bottomLeft() )
+			if (ball.getPosition().intersects(bricks[i].getSprite().getGlobalBounds() ))
+			{
+
+				bricks[i].m_IsAlive = false;
+				bricks[i].destroyBrick();
+				hit.play();
+				score += 10;
+				//bricksRemaining -= 1;
+				ball.reboundBrick();
+
+				if (score > hiScore)
+				{
+					hiScore = score;
+				}
+
+			}
+		}
 
 
 		// Handle ball hitting the bottom
@@ -208,7 +255,7 @@ int main()
 			ball.reboundPaddleOrTop();
 
 			// Add a point to the players score
-			score+= 5;
+			//score+= 5;
 
 			if (score > hiScore)
 			{
@@ -246,6 +293,12 @@ int main()
 		window.draw(hud);
 		window.draw(paddle.getSprite());
 		window.draw(ball.getSprite());
+
+		for (auto& theBrick : bricks)
+		{
+			window.draw(theBrick.getSprite());
+		}
+
 		window.display();
 	}
 
