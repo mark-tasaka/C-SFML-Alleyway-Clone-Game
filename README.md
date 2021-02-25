@@ -29,6 +29,11 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 ----------------------
 
 
+Update 1.04: 2021-02-25
+
+New graphics have been added for the 'start game', 'pause game' and 'game over' stages.  More functionality has been added to the program.
+
+
 Update 1.03: 2021-02-24
 
 Added a new SpawnBrick class (SpawnBrick.h and SpawnBrick.cpp) that will randomly generate the layout of bricks for the games. 
