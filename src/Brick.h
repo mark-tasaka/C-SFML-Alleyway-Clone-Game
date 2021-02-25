@@ -29,6 +29,7 @@ public:
 	void setSprite(int id);
 	Sprite getSprite();
 	IntRect getSpriteRect();
+	//void brickAnimation(int id);
 	Vector2f topRight();
 	Vector2f topLeft();
 	Vector2f bottomRight();
@@ -37,7 +38,7 @@ public:
 	//bool isBrickAlive();
 	bool m_IsAlive = true;
 
-	void update(Clock clock);
+	void update(Time dt);
 
 };
 

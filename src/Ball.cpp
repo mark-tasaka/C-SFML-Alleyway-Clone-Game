@@ -73,6 +73,7 @@ void Ball::reboundBrick()
 }
 
 
+
 void Ball::update(Time dt, Clock clock)
 {
 	// Update the ball position variables

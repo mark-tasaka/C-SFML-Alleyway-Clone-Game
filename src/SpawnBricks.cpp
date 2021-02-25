@@ -23,13 +23,13 @@ SpawnBricks::SpawnBricks()
 std::vector<Brick> SpawnBricks::generateBrickVector()
 {
 	vector <Brick> bricks;
-	float startX = 250.0f;
+	float startX = 300.0f;
 	float startY = 50.0f;
 
 	srand(time(NULL));
 
 
-	for (int i = 1; i < 50; i++)
+	for (int i = 1; i < 46; i++)
 	{
 		m_BrickSelect = rand() % 7 + 1;
 
@@ -42,7 +42,7 @@ std::vector<Brick> SpawnBricks::generateBrickVector()
 		if (i % 9 == 0)
 		{
 			startY += 20.0f;
-			startX = 250.0f;
+			startX = 300.0f;
 		}
 
 	}

@@ -22,12 +22,13 @@ using namespace sf;
 
 int main()
 {
+	
 	// Create a video mode object
 	VideoMode vm(SCREEN_WIDTH, SCREEN_HEIGHT);
 
+	enum class State { START, PLAY, PAUSE, GAME_OVER };
 
 	// Create and open a window for the game
-
 	RenderWindow window(vm, "Alleyway Clone", Style::Close);
 
 	sf::Clock clockTime;
@@ -46,17 +47,16 @@ int main()
 	//Brick types
 	for (int k = 0; k < bricks.size(); ++k)
 	{
-		int brickType = rand() % 6 + 1;
 		brickTypeVector.push_back(k);
 	}
 
 	int bType = 0;
-
+	
 	for (auto& theBrickLayout : bricks)
 	{
-		theBrickLayout.setSprite(brickTypeVector[bType]);
+		bType = rand() % 6 + 1;
 
-		bType++;
+		theBrickLayout.setSprite(bType);
 	}
 
 	// Create a bat
@@ -73,11 +73,29 @@ int main()
 	font.loadFromFile("../assets/font/forcedSquare.ttf");
 
 
+	//Start Page State
+	Texture startTexture;
+	startTexture.loadFromFile("../assets/images/startGame.png");
+	Sprite spriteStartGame;
+	spriteStartGame.setTexture(startTexture);
+
 	//Game Play State
 	Texture background;
 	background.loadFromFile("../assets/images/background.png");
 	Sprite spriteBackground;
 	spriteBackground.setTexture(background);
+
+	//Pause State
+	Texture pauseGame;
+	pauseGame.loadFromFile("../assets/images/pause.png");
+	Sprite spritePause;
+	spritePause.setTexture(pauseGame);
+
+	//Pause State
+	Texture GameOverTexture;
+	GameOverTexture.loadFromFile("../assets/images/gameOver.png");
+	Sprite spriteGameOver;
+	spriteGameOver.setTexture(GameOverTexture);
 
 
 	// Set the font to our retro-style
@@ -131,6 +149,7 @@ int main()
 		*********************************************************************
 		*/
 
+
 		Event event;
 		while (window.pollEvent(event))
 		{
@@ -181,7 +200,7 @@ int main()
 		}
 
 		/*
-		Update the bat, the ball and the HUD
+		Update the paddle, bricks, the ball and the HUD
 		*********************************************************************
 		*********************************************************************
 		*********************************************************************
@@ -190,6 +209,12 @@ int main()
 		Time dt = clock.restart();
 		paddle.update(dt);
 		ball.update(dt, clockTime);
+
+		/*
+		for (auto& eachBrick : bricks)
+		{
+			eachBrick.update(dt);
+		}*/
 	
 		
 		// Update the HUD text
@@ -200,6 +225,7 @@ int main()
 		//Ball hitting brick
 		for (int i = 0; i < bricks.size(); i++)
 		{
+			//bricks[i].update(dt);
 			//int brickType = rand() % 6 + 1;
 			//bricks[i].setSprite(brickTypeVector[i]);
 			//if(ball. >= bricks[i].bottomLeft() )
@@ -301,7 +327,6 @@ int main()
 
 		window.display();
 	}
-
 	return 0;
 }
 

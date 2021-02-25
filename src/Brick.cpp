@@ -120,12 +120,12 @@ IntRect Brick::getSpriteRect()
 }
 
 
-void Brick::update(Clock clock)
+void Brick::update(Time dt)
 {
 	//2-hit brick, no damage
 	if (m_BrickId == 5)
 	{
-		if (clock.getElapsedTime().asSeconds() > 0.2f)
+		if (dt.asSeconds() > 0.2f)
 		{
 			if (m_SpriteRect.left == 315)
 			{
@@ -141,7 +141,7 @@ void Brick::update(Clock clock)
 	//2-hit brick, 1 damage
 	if (m_BrickId == 7)
 	{
-		if (clock.getElapsedTime().asSeconds() > 0.2f)
+		if (dt.asSeconds() > 0.2f > 0.2f)
 		{
 			if (m_SpriteRect.left == 315)
 			{
@@ -157,7 +157,7 @@ void Brick::update(Clock clock)
 	//Powerball Brick
 	if (m_BrickId == 6)
 	{
-		if (clock.getElapsedTime().asSeconds() > 0.2f)
+		if (dt.asSeconds() > 0.2f > 0.2f)
 		{
 			if (m_SpriteRect.left == 315)
 			{
