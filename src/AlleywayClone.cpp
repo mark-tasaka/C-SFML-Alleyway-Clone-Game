@@ -28,6 +28,9 @@ int main()
 
 	enum class State { START, PLAY, PAUSE, GAME_OVER };
 
+	//The Start of the Game
+	State state = State::START;
+
 	// Create and open a window for the game
 	RenderWindow window(vm, "Alleyway Clone", Style::Close);
 
@@ -154,8 +157,25 @@ int main()
 		while (window.pollEvent(event))
 		{
 			if (event.type == Event::Closed)
-				// Quit the game when the window is closed
+			{// Quit the game when the window is closed
 				window.close();
+			}
+
+			if (event.key.code == Keyboard::Return && state == State::START)
+			{
+				state = State::PLAY;
+			}
+
+
+			//return from paused game
+			if (event.key.code == Keyboard::Return &&
+				state == State::PAUSE)
+			{
+				state = State::PLAY;
+				// Reset the clock so there isn't a frame jump
+				clock.restart();
+			}
+
 
 		}
 
@@ -165,40 +185,55 @@ int main()
 			window.close();
 		}
 
-		// Handle the pressing and releasing of the arrow keys
-		if (Keyboard::isKeyPressed(Keyboard::Left))
+
+
+		if (state == State::PLAY)
 		{
-			if (paddle.getPosition().left < 202)
+
+
+			// Pause a game while playing
+			if (event.key.code == Keyboard::Space &&
+				state == State::PLAY)
+			{
+				state = State::PAUSE;
+			}
+
+
+			// Handle the pressing and releasing of the arrow keys
+			if (Keyboard::isKeyPressed(Keyboard::Left))
+			{
+				if (paddle.getPosition().left < 202)
+				{
+					paddle.stopLeft();
+				}
+				else
+				{
+					paddle.moveLeft();
+				}
+			}
+			else
 			{
 				paddle.stopLeft();
 			}
-			else
+
+			if (Keyboard::isKeyPressed(Keyboard::Right))
 			{
-				paddle.moveLeft();
+
+				if (paddle.getPosition().left + 112 > window.getSize().x)
+				{
+					paddle.stopRight();
+				}
+				else
+				{
+					paddle.moveRight();
+				}
 			}
-		}
-		else
-		{
-			paddle.stopLeft();
-		}
-
-		if (Keyboard::isKeyPressed(Keyboard::Right))
-		{
-
-			if (paddle.getPosition().left + 112 > window.getSize().x)
+			else
 			{
 				paddle.stopRight();
 			}
-			else
-			{
-				paddle.moveRight();
-			}
-		}
-		else
-		{
-			paddle.stopRight();
-		}
 
+		}
 		/*
 		Update the paddle, bricks, the ball and the HUD
 		*********************************************************************
@@ -260,7 +295,8 @@ int main()
 			miss.play();
 
 			// Check for zero lives
-			if (lives < 1) {
+			if (lives < 1) 
+			{
 				// reset the score
 				score = 0;
 
@@ -315,14 +351,38 @@ int main()
 		*********************************************************************
 		*/
 		window.clear();
-		window.draw(spriteBackground);
-		window.draw(hud);
-		window.draw(paddle.getSprite());
-		window.draw(ball.getSprite());
 
-		for (auto& theBrick : bricks)
+		if (state == State::START)
 		{
-			window.draw(theBrick.getSprite());
+			window.draw(spriteStartGame);
+		}
+
+		if (state == State::PLAY)
+		{
+			window.draw(spriteBackground);
+			window.draw(hud);
+			window.draw(paddle.getSprite());
+			window.draw(ball.getSprite());
+
+			for (auto& theBrick : bricks)
+			{
+				window.draw(theBrick.getSprite());
+			}
+		}
+
+		if (state == State::PAUSE)
+		{
+			window.draw(spriteBackground);
+			window.draw(hud);
+			window.draw(paddle.getSprite());
+			window.draw(ball.getSprite());
+
+			for (auto& theBrick : bricks)
+			{
+				window.draw(theBrick.getSprite());
+			}
+
+			window.draw(spritePause);
 		}
 
 		window.display();
