@@ -29,6 +29,12 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 ----------------------
 
 
+Update 1.05: 2021-02-26
+
+Add the stage transition functionality (Start Game to Play Game, etc.) to the game.
+
+
+
 Update 1.04: 2021-02-25
 
 New graphics have been added for the 'start game', 'pause game' and 'game over' stages.  More functionality has been added to the program.
