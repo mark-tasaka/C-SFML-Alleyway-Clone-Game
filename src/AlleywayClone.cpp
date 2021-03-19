@@ -41,7 +41,11 @@ int main()
 	int hiScore = 0;
 	int level = 1;
 
-	std::vector<Brick> bricks = SpawnBricks().generateBrickVector();
+
+	srand(time(NULL));
+	int selectNumber = rand() % 2;
+
+	std::vector<Brick> bricks = SpawnBricks().generateBrickVector(selectNumber);
 
 	srand(time(NULL));
 

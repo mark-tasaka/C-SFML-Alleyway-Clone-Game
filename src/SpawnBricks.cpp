@@ -20,11 +20,34 @@ SpawnBricks::SpawnBricks()
 
 }
 
-std::vector<Brick> SpawnBricks::generateBrickVector()
+std::vector<Brick> SpawnBricks::generateBrickVector(int choice)
+{
+	
+	vector <Brick> bricks;
+
+	if (choice == 0)
+	{
+		bricks = configure0();
+	}
+	else if (choice == 1)
+	{
+		bricks = configure1();
+	}
+	else
+	{
+		bricks = configure0();
+	}
+
+	return bricks;
+
+}
+
+std::vector<Brick> SpawnBricks::configure0()
 {
 	vector <Brick> bricks;
 	float startX = 300.0f;
 	float startY = 50.0f;
+	int m_BrickSelect;
 
 	srand(time(NULL));
 
@@ -34,7 +57,7 @@ std::vector<Brick> SpawnBricks::generateBrickVector()
 		m_BrickSelect = rand() % 7 + 1;
 
 		Vector2f brickPos = Vector2f(startX, startY);
-		Brick brick (brickPos, m_BrickSelect);
+		Brick brick(brickPos, m_BrickSelect);
 		bricks.push_back(brick);
 
 		startX += 100.0f;
@@ -48,5 +71,50 @@ std::vector<Brick> SpawnBricks::generateBrickVector()
 	}
 
 	return bricks;
+}
 
+
+std::vector<Brick> SpawnBricks::configure1()
+{
+	vector <Brick> bricks;
+	float startX = 200.0f;
+	float startY = 50.0f;
+	int m_BrickSelect;
+
+	srand(time(NULL));
+
+
+	for (int i = 0; i < 24; i++)
+	{
+		if (i < 9)
+		{
+			startX += 100.0f;
+		}
+		else if (i == 9 || i == 11 || i ==13)
+		{
+			startY += 20.0f;
+			startX = 300.0f;
+		}
+		else if (i == 10 || i == 12 || i == 14)
+		{
+			startX = 1100.0f;
+		}
+		else if (i == 15)
+		{
+			startY += 20.0f;
+			startX = 300.0f;
+		}
+		else
+		{
+			startX += 100.0f;
+		}
+
+		m_BrickSelect = rand() % 7 + 1;
+		Vector2f brickPos = Vector2f(startX, startY);
+		Brick brick(brickPos, m_BrickSelect);
+		bricks.push_back(brick);
+
+	}
+
+	return bricks;
 }

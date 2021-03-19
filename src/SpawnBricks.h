@@ -22,8 +22,9 @@ private:
 
 public:
 	SpawnBricks();
-	std::vector<Brick> generateBrickVector();
-
+	std::vector<Brick> generateBrickVector(int choice);
+	std::vector<Brick> configure0();
+	std::vector<Brick> configure1();
 };
 
 
