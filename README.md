@@ -29,6 +29,14 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 ----------------------
 
 
+
+
+Update 1.06: 2021-03-18
+
+Created an alternate level layout and added the ability to randomly generate the level.
+
+
+
 Update 1.05: 2021-02-26
 
 Add the stage transition functionality (Start Game to Play Game, etc.) to the game.
