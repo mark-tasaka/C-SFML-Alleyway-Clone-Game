@@ -25,6 +25,8 @@ public:
 	std::vector<Brick> generateBrickVector(int choice);
 	std::vector<Brick> configure0();
 	std::vector<Brick> configure1();
+	std::vector<Brick> configure2();
+	std::vector<Brick> configure3();
 };
 
 

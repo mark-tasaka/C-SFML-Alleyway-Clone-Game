@@ -43,7 +43,8 @@ int main()
 
 
 	srand(time(NULL));
-	int selectNumber = rand() % 2;
+	int selectNumber = rand() % 4;
+	//int selectNumber = 3;
 
 	std::vector<Brick> bricks = SpawnBricks().generateBrickVector(selectNumber);
 
