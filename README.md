@@ -31,6 +31,11 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 
 
 
+Update 1.07: 2021-03-19
+
+Two new alternative level layouts have been added to the game.
+
+
 Update 1.06: 2021-03-18
 
 Created an alternate level layout and added the ability to randomly generate the level.
