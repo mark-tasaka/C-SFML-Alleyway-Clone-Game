@@ -41,6 +41,10 @@ std::vector<Brick> SpawnBricks::generateBrickVector(int choice)
 	{
 		bricks = configure3();
 	}
+	else if (choice == 4)
+	{
+		bricks = configureTest();
+	}
 	else
 	{
 		bricks = configure0();
@@ -208,6 +212,32 @@ std::vector<Brick> SpawnBricks::configure3()
 			startY += 20.0f;
 			startX = 700.0f;
 		}
+
+	}
+
+	return bricks;
+}
+
+
+std::vector<Brick> SpawnBricks::configureTest()
+{
+	vector <Brick> bricks;
+	float startX = 300.0f;
+	float startY = 50.0f;
+	int m_BrickSelect;
+
+	srand(time(NULL));
+
+
+	for (int i = 0; i < 3; i++)
+	{
+		m_BrickSelect = rand() % 7 + 1;
+
+		Vector2f brickPos = Vector2f(startX, startY);
+		Brick brick(brickPos, m_BrickSelect);
+		bricks.push_back(brick);
+
+		startX += 100.0f;
 
 	}
 

@@ -27,6 +27,7 @@ public:
 	std::vector<Brick> configure1();
 	std::vector<Brick> configure2();
 	std::vector<Brick> configure3();
+	std::vector<Brick> configureTest();
 };
 
 

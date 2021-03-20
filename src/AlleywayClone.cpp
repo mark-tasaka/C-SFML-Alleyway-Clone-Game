@@ -43,10 +43,13 @@ int main()
 
 
 	srand(time(NULL));
-	int selectNumber = rand() % 4;
-	//int selectNumber = 3;
+	//int selectNumber = rand() % 4;
+	int selectNumber = 4;
 
 	std::vector<Brick> bricks = SpawnBricks().generateBrickVector(selectNumber);
+
+	//bricks remaining
+	int bricksRemaining = bricks.size();
 
 	srand(time(NULL));
 
@@ -259,7 +262,7 @@ int main()
 		
 		// Update the HUD text
 		std::stringstream ss;
-		ss << "Level: " << level << "\n\nScore: " << score << "\n\nBalls: " << lives << "\n\nTop Score:\n" << hiScore;
+		ss << "Level: " << level << "\n\nScore: " << score << "\n\nBalls: " << lives << "\n\nBricks\nRemaining: " << bricksRemaining << "\n\nTop Score:\n" << hiScore;
 		hud.setString(ss.str());
 
 		//Ball hitting brick
@@ -276,7 +279,43 @@ int main()
 				bricks[i].destroyBrick();
 				hit.play();
 				score += 10;
-				//bricksRemaining -= 1;
+				bricksRemaining -= 1;
+
+				if (bricksRemaining == 0)
+				{	
+					++level;
+
+					std::string levelStringVector = to_string(level);
+
+					int selectNumber = rand() % 4;
+					
+					bricks = SpawnBricks().generateBrickVector(selectNumber);
+
+					//bricks remaining
+					bricksRemaining = bricks.size();
+
+					srand(time(NULL));
+
+					//std:vector<int> brickTypeVector2;
+
+					//Brick types
+					for (int k = 0; k < bricks.size(); ++k)
+					{
+						brickTypeVector.push_back(k);
+					}
+
+					int bType = 0;
+
+					for (auto& theBrickLayout : bricks)
+					{
+						bType = rand() % 6 + 1;
+
+						theBrickLayout.setSprite(bType);
+					}
+
+				}
+
+
 				ball.reboundBrick();
 
 				if (score > hiScore)
