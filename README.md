@@ -30,6 +30,10 @@ Reference: John Horton's (Packt) Beginning C++ Game Programing (Second Edition):
 
 
 
+Update 1.08: 2021-03-20
+
+Worked on the next level functionality.  When all bricks are destroyed, a new layout of bricks is spawned.
+
 
 Update 1.07: 2021-03-19
 
